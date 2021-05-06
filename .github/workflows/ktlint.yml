@@ -1,0 +1,16 @@
+name: Ktlint Check
+
+on: [pull_request]
+
+jobs:
+  ktlint:
+    name: Check Code Quality
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clone PR
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
+      - name: Run Ktlint
+        uses: lucasnlm/ktlint-action@master

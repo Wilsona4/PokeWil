@@ -1,0 +1,17 @@
+#!/bin/sh
+
+echo "Ktlint Check Started"
+# Format code using KtLint static analysis
+
+./gradlew app:ktlintCheck --daemon
+
+status=$?
+
+if [ "$status" != 0 ]
+ then
+    echo 1>&2 "Static analysis found formatting errors. Run ./gradlew ktlintCheck in the terminal for checks"
+    exit 1
+else
+    echo "Formatting checks all passed"
+    exit 0
+ fi
