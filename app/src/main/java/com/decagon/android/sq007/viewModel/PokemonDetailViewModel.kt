@@ -16,8 +16,6 @@ class PokemonDetailViewModel @Inject constructor(
     private val repository: PokemonRepository
 ) : ViewModel() {
 
-//    var loadError = LiveData<String>("")
-
     private var _loadError = MutableLiveData<String>()
     val loadError: LiveData<String> get() = _loadError
 
@@ -29,7 +27,6 @@ class PokemonDetailViewModel @Inject constructor(
             when (val result = repository.getPokemonInfo(pokemonName)) {
                 is Resource.Success -> {
                     _myPokemonInfo.value = result.data
-
                     _loadError.value = ""
                 }
                 else -> {

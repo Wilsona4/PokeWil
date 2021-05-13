@@ -14,16 +14,14 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.bitmap.BitmapPool
 import coil.load
+import coil.request.ImageRequest
 import coil.size.Size
 import coil.transform.Transformation
 import com.decagon.android.sq007.R
 import com.decagon.android.sq007.data.model.PokeWilListModel
-import com.decagon.android.sq007.viewModel.PokemonListViewModel
 
 class PokeWilListAdapter(private val interaction: Interaction? = null) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-
-    private lateinit var viewModel: PokemonListViewModel
 
     val diffCallBack = object : DiffUtil.ItemCallback<PokeWilListModel>() {
 
@@ -88,6 +86,27 @@ class PokeWilListAdapter(private val interaction: Interaction? = null) :
             pokeWilName.text = item.pokemonName
             pokeWilNumber.text = num
 
+            ImageRequest.Builder(pokeWilName.context).transformations(object : Transformation {
+                override fun key(): String = "palleteTransformer"
+
+                override suspend fun transform(
+                    pool: BitmapPool,
+                    input: Bitmap,
+                    size: Size
+                ): Bitmap {
+                    Palette.from(input).generate { palette: Palette? ->
+                        // access palette instance here
+                        pokeWilCard.setCardBackgroundColor(
+                            palette?.lightVibrantSwatch?.rgb ?: ContextCompat.getColor(
+                                context,
+                                R.color.white
+                            )
+                        )
+                    }
+                    return input
+                }
+            })
+
             pokeWilImage.load(item.imageUrl) {
                 transformations(object : Transformation {
                     override fun key() = "paletteTransformer"
@@ -96,7 +115,8 @@ class PokeWilListAdapter(private val interaction: Interaction? = null) :
                         input: Bitmap,
                         size: Size
                     ): Bitmap {
-                        val palette = Palette.from(input).generate { palette: Palette? ->
+
+                        Palette.from(input).generate { palette: Palette? ->
                             // access palette instance here
                             pokeWilCard.setCardBackgroundColor(
                                 palette?.lightVibrantSwatch?.rgb ?: ContextCompat.getColor(
