@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.bitmap.BitmapPool
 import coil.load
-import coil.request.ImageRequest
 import coil.size.Size
 import coil.transform.Transformation
 import com.decagon.android.sq007.R
@@ -85,27 +84,6 @@ class PokeWilListAdapter(private val interaction: Interaction? = null) :
 
             pokeWilName.text = item.pokemonName
             pokeWilNumber.text = num
-
-            ImageRequest.Builder(pokeWilName.context).transformations(object : Transformation {
-                override fun key(): String = "palleteTransformer"
-
-                override suspend fun transform(
-                    pool: BitmapPool,
-                    input: Bitmap,
-                    size: Size
-                ): Bitmap {
-                    Palette.from(input).generate { palette: Palette? ->
-                        // access palette instance here
-                        pokeWilCard.setCardBackgroundColor(
-                            palette?.lightVibrantSwatch?.rgb ?: ContextCompat.getColor(
-                                context,
-                                R.color.white
-                            )
-                        )
-                    }
-                    return input
-                }
-            })
 
             pokeWilImage.load(item.imageUrl) {
                 transformations(object : Transformation {
