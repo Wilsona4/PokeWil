@@ -15,4 +15,6 @@
     <string name="exp">EXP</string>
     <string name="pokeNumber">#1</string>
     <string name="base_stats">Base Stats</string>
+    <string name="connected">Connected</string>
+    <string name="lost_connection">Lost Connection</string>
 </resources>

@@ -84,7 +84,7 @@ class PokemonListViewModel @Inject constructor(
         } else {
             cachedPokemonList
         }
-        viewModelScope.launch() {
+        viewModelScope.launch {
             if (query.isEmpty()) {
                 Log.d("Searching2", "searchPokemonList: ${cachedPokemonList.size}")
                 _pokemonList.postValue(cachedPokemonList)
